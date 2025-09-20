@@ -1,6 +1,5 @@
 package com.example.interfaz_pelicula.ui.theme.pantalla
 
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -20,13 +19,14 @@ import androidx.compose.ui.unit.sp
 import com.example.interfaz_pelicula.ui.theme.moleculas.FormularioTextoConBoton
 import com.example.interfaz_pelicula.R
 
-val VerdeFosforescente = Color(0xFF00BB2D)
 val Marron_Obscuro = Color(0xFF743012)
 val Amarillo_Dorado = Color(0xFFF6B141)
-val Rosa = Color(0xFFB814B8)
+val VerdeFosforescente = Color(0xFF00BB2D)
+val Rosa = Color(0xFFFF00FF)
+val OrangeRed = Color(0xFFFF5E00)
 
-val jumanjiFont = FontFamily(Font(R.font.calculator))  // Replace "jumanji_font" with your actual font file name
 
+val jumanjiFont = FontFamily(Font(R.font.calculator))
 
 enum class Personaje(
     val actor: String,
@@ -45,12 +45,12 @@ enum class Personaje(
     ),
     Mouse_Finbar(
         "Kevin Hart",
-        arrayOf("Zoología", "Armas valet", "Lingüística"),
+        arrayOf("Zoología", "Armas valet", "Lingüistica"),
         arrayOf("Pastel", "Velocidad", "Fuerza")
     ),
     Shelly_Oberon(
         "Jack Black",
-        arrayOf("Cartografía", "Arqueología", "Paleontología", "Geometría"),
+        arrayOf("Cartografia", "Arqueologia", "Paleontologia", "Geometria"),
         arrayOf("Resistencia", "Calor", "Sol", "Arena")
     ),
     Ming_Fleetfoot(
@@ -66,34 +66,40 @@ fun MenuJumanjiSencillo(onIniciarPartida: (() -> Unit)? = null) {
     var pantallaActual by remember { mutableStateOf("menu") }
     var personajeSeleccionado by remember { mutableStateOf(Personaje.Smolder_Bravestone) }
 
-    Column(modifier = Modifier.fillMaxSize().padding(12.dp)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Marron_Obscuro)
+            .padding(12.dp)
+    ) {
         when (pantallaActual) {
             "menu" -> {
                 Text(
                     "\nBienvenido a Jumanji",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(Marron_Obscuro)
                         .padding(8.dp),
-                    fontSize = 40.sp,
-                    color = Amarillo_Dorado,
+                    fontSize = 60.sp,
+                    color = VerdeFosforescente,
                     fontWeight = FontWeight.ExtraBold,
                     fontFamily = jumanjiFont,
                     textAlign = TextAlign.Center
                 )
                 Text(
-                    "\nElige qué avatar quieres ser. Escribiendo el número:\n",
+                    "\nElige que avatar quieres ser. Escribiendo el numero:\n",
                     fontFamily = jumanjiFont,
-                    color = VerdeFosforescente,
+                    color = OrangeRed,
                     fontWeight = FontWeight.SemiBold,
-                    fontSize = 20.sp
+                    fontSize = 35.sp
                 )
 
                 Personaje.values().forEachIndexed { index, personaje ->
-                    Text("${index + 1}. ${personaje.name} (${personaje.actor})",
+                    Text(
+                        "${index + 1}. ${personaje.name} (${personaje.actor})",
                         fontFamily = jumanjiFont,
                         color = Rosa,
-                        fontWeight = FontWeight.SemiBold
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 25.sp
                     )
                 }
 
@@ -116,9 +122,9 @@ fun MenuJumanjiSencillo(onIniciarPartida: (() -> Unit)? = null) {
 
             "juego" -> {
                 Text(
-                    "\n¡Felicidades!",
-                    color = Rosa,
-                    fontSize = 50.sp,
+                    text = "\n¡Felicidades!",
+                    color = VerdeFosforescente,
+                    fontSize = 70.sp,
                     fontWeight = FontWeight.Black,
                     fontFamily = jumanjiFont
                 )
@@ -126,15 +132,16 @@ fun MenuJumanjiSencillo(onIniciarPartida: (() -> Unit)? = null) {
                     "\nAhora Eres: ${personajeSeleccionado.name}, " +
                             "\nRepresentado por el actor: ${personajeSeleccionado.actor}",
                     fontWeight = FontWeight.Bold,
-                    fontSize = 22.sp,
-                    color = Marron_Obscuro,
+                    fontSize = 30.sp,
+                    color = Rosa,
                     fontFamily = jumanjiFont
                 )
                 Text(
                     "\nPoderes y debilidades de tu avatar son:",
-                    fontWeight = FontWeight.Bold,
-                    color = Rosa,
-                    fontFamily = jumanjiFont
+                    fontWeight = FontWeight.Black,
+                    color = Color.White,
+                    fontFamily = jumanjiFont,
+                    fontSize = 25.sp
                 )
 
                 Row(
@@ -143,9 +150,13 @@ fun MenuJumanjiSencillo(onIniciarPartida: (() -> Unit)? = null) {
                         .fillMaxWidth()
                         .padding(top = 12.dp)
                         .clip(RoundedCornerShape(12.dp))
-                        .border(width = 3.dp, color = Marron_Obscuro, shape = RoundedCornerShape(12.dp))
-                        .background(Amarillo_Dorado, shape = RoundedCornerShape(12.dp))
-                        .padding(12.dp)
+                        .border(
+                            width = 3.dp,
+                            color = Color.White,
+                            shape = RoundedCornerShape(12.dp)
+                        )
+                        .background(Color.White, shape = RoundedCornerShape(12.dp))
+                        .padding(5.dp)
                 ) {
                     Column(
                         modifier = Modifier
@@ -153,22 +164,23 @@ fun MenuJumanjiSencillo(onIniciarPartida: (() -> Unit)? = null) {
                             .fillMaxHeight()
                             .clip(RoundedCornerShape(8.dp))
                             .border(1.dp, Marron_Obscuro, RoundedCornerShape(8.dp))
-                            .background(Color.White, RoundedCornerShape(8.dp))
+                            .background(Amarillo_Dorado, RoundedCornerShape(8.dp))
                             .padding(10.dp)
                     ) {
                         Text(
                             "PODERES\n",
-                            fontWeight = FontWeight.Black,
-                            color = Marron_Obscuro,
+                            fontWeight = FontWeight.ExtraBold,
+                            color = OrangeRed,
                             fontFamily = jumanjiFont,
-                            fontSize = 18.sp,
+                            fontSize = 35.sp,
                             textAlign = TextAlign.Center
                         )
                         personajeSeleccionado.fortalezas.forEach {
                             Text("• $it",
                                 fontFamily = jumanjiFont,
-                                color = VerdeFosforescente,
-                                fontWeight = FontWeight.Black
+                                color = Marron_Obscuro,
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.SemiBold
                             )
                         }
                     }
@@ -181,22 +193,23 @@ fun MenuJumanjiSencillo(onIniciarPartida: (() -> Unit)? = null) {
                             .fillMaxHeight()
                             .clip(RoundedCornerShape(8.dp))
                             .border(1.dp, Marron_Obscuro, RoundedCornerShape(8.dp))
-                            .background(Color.White, RoundedCornerShape(8.dp))
+                            .background(Amarillo_Dorado, RoundedCornerShape(8.dp))
                             .padding(10.dp)
                     ) {
                         Text(
                             "DEBILIDADES\n",
-                            fontWeight = FontWeight.Black,
-                            color = Marron_Obscuro,
+                            fontWeight = FontWeight.ExtraBold,
+                            color = OrangeRed,
                             fontFamily = jumanjiFont,
-                            fontSize = 18.sp,
+                            fontSize = 35.sp,
                             textAlign = TextAlign.Center
                         )
                         personajeSeleccionado.debilidades.forEach {
                             Text("• $it",
                                 fontFamily = jumanjiFont,
-                                color = VerdeFosforescente,
-                                fontWeight = FontWeight.Black
+                                color = Marron_Obscuro,
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.SemiBold
                             )
                         }
                     }
@@ -207,12 +220,17 @@ fun MenuJumanjiSencillo(onIniciarPartida: (() -> Unit)? = null) {
                     androidx.compose.material3.Button(
                         onClick = it,
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Marron_Obscuro,
-                            contentColor = Amarillo_Dorado
+                            containerColor = Amarillo_Dorado,
+                            contentColor = Marron_Obscuro
                         ),
-                        modifier = Modifier.fillMaxWidth().padding(top = 20.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 20.dp)
                     ) {
-                        androidx.compose.material3.Text("Iniciar Partida")
+                        androidx.compose.material3.Text(
+                            "Iniciar Partida",
+                            fontSize = 20.sp
+                        )
                     }
                 }
             }

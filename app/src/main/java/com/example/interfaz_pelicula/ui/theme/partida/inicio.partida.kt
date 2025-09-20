@@ -1,5 +1,6 @@
 package com.example.interfaz_pelicula.partida
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -12,8 +13,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.interfaz_pelicula.ui.theme.pantalla.*
 
+val OrangeRed = Color(0xFFFF5E00)
 val VerdeFosforescente = Color(0xFF00BB2D)
-
+val Rosa = Color(0xFFFF00FF)
 
 @Composable
 fun InicioPartida(personaje: Personaje, onVolverAlMenu: () -> Unit) {
@@ -23,36 +25,35 @@ fun InicioPartida(personaje: Personaje, onVolverAlMenu: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(Marron_Obscuro)
             .padding(20.dp),
         verticalArrangement = Arrangement.Center
     ) {
-        // Título dinámico según la etapa de la partida
         val titulo = when (estadoPartida) {
             "inicio" -> "Iniciando tu aventura en Jumanji"
-            "selva", "acantilado" -> "Vas por el camino correcto, sigue asi"
+            "selva", "acantilado" -> "Vas por el camino correcto, sigue así"
             "fin" -> "Fin de la partida"
-            "victoria" -> "¡Victoria!"
+            "victoria" -> "¡Felicidades! 🎉"
             else -> ""
         }
 
         Text(
             titulo,
-            fontSize = 28.sp,
+            fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
-            color = VerdeFosforescente,
+            color = if (estadoPartida == "victoria") VerdeFosforescente else OrangeRed,
             fontFamily = jumanjiFont,
             modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        // Datos del personaje solo se muestran al inicio
         if (estadoPartida == "inicio") {
             Text(
                 "${personaje.name} (${personaje.actor})",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = Marron_Obscuro,
+                fontSize = 25.sp,
+                fontWeight = FontWeight.Bold,
+                color = Rosa,
                 fontFamily = jumanjiFont
             )
             Spacer(modifier = Modifier.height(20.dp))
@@ -60,8 +61,18 @@ fun InicioPartida(personaje: Personaje, onVolverAlMenu: () -> Unit) {
 
         Text(
             mensaje,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Medium,
+            fontSize = 25.sp,
+            fontWeight = FontWeight.Bold,
+            color = when (mensaje) {
+                "Elige tu primer camino en Jumanji...",
+                "Te adentras en la selva... ¡Encuentras frutas exóticas!",
+                "Llegas a un acantilado, puedes trepar o saltar al otro lado, como Tarzán con una rama.",
+                "¡Has superado el acantilado y encontrado un tesoro!" -> Rosa
+                "Fin de la partida: ¡Te han comido los cocodrilos!",
+                "Fin de la partida: La fruta era venenosa...",
+                "Fin de la partida: No te creas Tarzán." -> VerdeFosforescente
+                else -> Color.White
+            },
             fontFamily = jumanjiFont
         )
 
@@ -71,20 +82,16 @@ fun InicioPartida(personaje: Personaje, onVolverAlMenu: () -> Unit) {
             "inicio" -> {
                 Button(
                     onClick = {
-                        mensaje = "Te adentras en la selva... ¡Encuentras frutas exoticas!"
+                        mensaje = "Te adentras en la selva... ¡Encuentras frutas exóticas!"
                         estadoPartida = "selva"
                     },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Black,
-                        contentColor = Color.White
+                        containerColor = Amarillo_Dorado,
+                        contentColor = Marron_Obscuro
                     ),
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(
-                        "Ir a la Selva ",
-                        fontWeight = FontWeight.Black,
-                        fontFamily = jumanjiFont
-                    )
+                    Text("Ir a la Selva", fontWeight = FontWeight.Black, fontFamily = jumanjiFont, fontSize = 20.sp)
                 }
 
                 Spacer(modifier = Modifier.height(15.dp))
@@ -95,56 +102,44 @@ fun InicioPartida(personaje: Personaje, onVolverAlMenu: () -> Unit) {
                         estadoPartida = "fin"
                     },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Black,
-                        contentColor = Color.White
+                        containerColor = Amarillo_Dorado,
+                        contentColor = Marron_Obscuro
                     ),
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(
-                        "Seguir el Río ",
-                        fontWeight = FontWeight.Black,
-                        fontFamily = jumanjiFont
-                    )
+                    Text("Seguir el Río", fontWeight = FontWeight.Black, fontFamily = jumanjiFont, fontSize = 20.sp)
                 }
             }
 
             "selva" -> {
                 Button(
                     onClick = {
-                        mensaje = "Llegas a un acantilado, puedes trepar o saltar al otro lado, como tarzan con una rama que cuelga."
+                        mensaje = "Llegas a un acantilado, puedes trepar o saltar al otro lado, como Tarzán con una rama."
                         estadoPartida = "acantilado"
                     },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Black,
-                        contentColor = Color.White
+                        containerColor = Amarillo_Dorado,
+                        contentColor = Marron_Obscuro
                     ),
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(
-                        "Me aguanto el hambre",
-                        fontFamily = jumanjiFont,
-
-                        )
+                    Text("Me aguanto el hambre", fontWeight = FontWeight.Black, fontFamily = jumanjiFont, fontSize = 20.sp)
                 }
-
 
                 Spacer(modifier = Modifier.height(15.dp))
 
                 Button(
                     onClick = {
-                        mensaje = "Fin de la partida: No te comas todo lo que veas. La fruta era venenosa...."
+                        mensaje = "Fin de la partida: La fruta era venenosa..."
                         estadoPartida = "fin"
                     },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Black,
-                        contentColor = Color.White
+                        containerColor = Amarillo_Dorado,
+                        contentColor = Marron_Obscuro
                     ),
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(
-                        "Me las como para no morir de hambre",
-                        fontFamily = jumanjiFont
-                    )
+                    Text("Me las como para no morir de hambre", fontWeight = FontWeight.Black, fontFamily = jumanjiFont, fontSize = 20.sp)
                 }
             }
 
@@ -152,37 +147,31 @@ fun InicioPartida(personaje: Personaje, onVolverAlMenu: () -> Unit) {
                 Button(
                     onClick = {
                         mensaje = "¡Has superado el acantilado y encontrado un tesoro!"
-                        estadoPartida = "¡Felicidades has ganado!"
+                        estadoPartida = "victoria"
                     },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Black,
-                        contentColor = Color.White
+                        containerColor = Amarillo_Dorado,
+                        contentColor = Marron_Obscuro
                     ),
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(
-                        "Trepas el acantilado",
-                        fontFamily = jumanjiFont
-                    )
+                    Text("Trepas el acantilado", fontWeight = FontWeight.Black, fontFamily = jumanjiFont, fontSize = 20.sp)
                 }
 
                 Spacer(modifier = Modifier.height(15.dp))
 
                 Button(
                     onClick = {
-                        mensaje = "Fin de la partida: No te creas Tarzan."
+                        mensaje = "Fin de la partida: No te creas Tarzán."
                         estadoPartida = "fin"
                     },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Black,
-                        contentColor = Color.White
+                        containerColor = Amarillo_Dorado,
+                        contentColor = Marron_Obscuro
                     ),
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(
-                        "Cruzas como Tarzan",
-                        fontFamily = jumanjiFont
-                    )
+                    Text("Cruzas como Tarzán", fontWeight = FontWeight.Black, fontFamily = jumanjiFont, fontSize = 20.sp)
                 }
             }
         }
@@ -191,18 +180,20 @@ fun InicioPartida(personaje: Personaje, onVolverAlMenu: () -> Unit) {
 
         if (estadoPartida == "fin" || estadoPartida == "victoria") {
             Button(
-                onClick = onVolverAlMenu,
+                onClick = {
+                    estadoPartida = "inicio"
+                    mensaje = "Elige tu primer camino en Jumanji..."
+                    onVolverAlMenu()
+                },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Marron_Obscuro,
-                    contentColor = Amarillo_Dorado
+                    containerColor = Amarillo_Dorado,
+                    contentColor = Marron_Obscuro
                 ),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text(
-                    "Volver al menú",
-                    fontFamily = jumanjiFont
-                )
+                Text("Terminar partida", fontWeight = FontWeight.Black, fontFamily = jumanjiFont, fontSize = 20.sp)
             }
         }
     }
 }
+

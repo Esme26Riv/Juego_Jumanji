@@ -29,8 +29,8 @@ fun FormularioTextoConBoton(
         Button(
             onClick = al_pulsar_boton,
             colors = ButtonDefaults.buttonColors(
-                containerColor = Marron_Obscuro,
-                contentColor = Amarillo_Dorado
+                containerColor = Amarillo_Dorado,
+                contentColor = Marron_Obscuro
             ),
             modifier = Modifier.fillMaxWidth()
         ) {
